@@ -33,16 +33,11 @@ app.get("/docs", (req, res) => {
 
 app.get("/api/students",(req,res)=>{
   res.json(students);
-
 });
 
-// api/cohor
 app.get("/api/cohorts",(req,res)=>{
   res.json(cohorts);
-
 });
-
-
 
 // START SERVER
 app.listen(PORT, () => {
