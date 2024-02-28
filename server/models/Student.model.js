@@ -14,8 +14,8 @@ const studentSchema = new Schema({
   program: String,
   background: String,
   image: String,
-  cohort: { type: Schema.Types.ObjectId, ref: "Cohort" },
-  projects: Array,
+  cohort: { type: mongoose.Schema.Types.ObjectId, ref: "Cohort" },
+  projects: Array
 });
 
 // CREATE MODEL
