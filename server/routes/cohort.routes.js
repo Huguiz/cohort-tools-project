@@ -1,5 +1,4 @@
 const router = require('express').Router();
-
 const Cohort = require('../models/Cohort.model');
 
 router.get("/", (req, res) => {

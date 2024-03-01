@@ -1,5 +1,4 @@
 const router = require('express').Router();
-
 const Student = require('../models/Student.model');
 
 router.get("/", (req, res) => {
@@ -80,8 +79,8 @@ router.put("/:studentId", (req, res) => {
 
 router.delete("/:studentId", (req, res) => {
     Student.findByIdAndDelete({ _id: req.params.studentId })
-        .then((deletedCohort) => {
-            if (!deletedCohort) {
+        .then((deletedStudent) => {
+            if (!deletedStudent) {
                 return res.status(404).json({ message: "Student not found" });
             }
             res.status(204).send();
