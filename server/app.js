@@ -5,6 +5,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const Student = require("./models/Student.model");
 const Cohort = require("./models/Cohort.model");
+const { errorHandler, notFoundHandler } = require('./middleware/error-handling');
 
 // STATIC DATA
 const PORT = 5005;
@@ -40,7 +41,7 @@ app.get("/api/students", (req, res) => {
       res.json(students);
     })
     .catch((error) => {
-      console.error("Error while retrieving students ->", error);
+      console.log(error)
       res.status(500).json({ error: "Failed to retrieve students" });
     });
 });
@@ -52,7 +53,7 @@ app.get("/api/students/cohort/:cohortId", (req, res) => {
       res.json(students);
     })
     .catch((error) => {
-      console.error("Error while retrieving students ->", error);
+      console.log(error)
       res.status(500).json({ error: "Failed to retrieve students" });
     });
 });
@@ -67,7 +68,7 @@ app.get("/api/students/:studentId", (req, res) => {
       res.json(updatedStudent);
     })
     .catch((error) => {
-      console.error("Error while retrieving student ->", error);
+      console.log(error)
       res.status(500).json({ error: "Failed to retrieve student" });
     });
 });
@@ -89,7 +90,8 @@ app.post("/api/students", (req, res) => {
     .then((studentFromDB) => {
       res.json(studentFromDB)
     })
-    .catch((e) => {
+    .catch((error) => {
+      console.log(error)
       res.status(500).json({ message: "Error creating a new student" })
     });
 });
@@ -103,6 +105,7 @@ app.put("/api/students/:studentId", (req, res) => {
       res.json(updatedStudent);
     })
     .catch((error) => {
+      console.log(error)
       res.status(500).json({ message: "Error updating Student" });
     });
 });
@@ -116,6 +119,7 @@ app.delete("/api/students/:studentId", (req, res) => {
       res.status(204).send();
     })
     .catch((error) => {
+      console.log(error)
       res.status(500).json({ message: "Error deleting Student" });
     });
 });
@@ -128,7 +132,7 @@ app.get("/api/cohorts", (req, res) => {
       res.json(cohorts);
     })
     .catch((error) => {
-      console.error("Error while retrieving cohorts ->", error);
+      console.log(error)
       res.status(500).json({ error: "Failed to retrieve cohorts" });
     });
 });
@@ -139,7 +143,7 @@ app.get("/api/cohorts/:cohortId", (req, res) => {
       res.json(cohort);
     })
     .catch((error) => {
-      console.error("Error while retrieving cohort ->", error);
+      console.log(error)
       res.status(500).json({ error: "Failed to retrieve cohort" });
     });
 });
@@ -150,6 +154,7 @@ app.get("/api/cohorts/:cohortId", (req, res) => {
       res.json(cohort);
     })
     .catch((error) => {
+      console.log(error)
       res.status(500).json({ error: "Failed to retrieve cohort" });
     });
 });
@@ -170,7 +175,8 @@ app.post("/api/cohorts", (req, res) => {
     .then((cohortFromDB) => {
       res.json(cohortFromDB)
     })
-    .catch((e) => {
+    .catch((error) => {
+      console.log(error)
       res.status(500).json({ message: "Error creating a new cohort" })
     });
 });
@@ -184,6 +190,7 @@ app.put("/api/cohorts/:cohortId", (req, res) => {
       res.json(updatedCohort);
     })
     .catch((error) => {
+      console.log(error)
       res.status(500).json({ message: "Error updating Cohort" });
     });
 });
@@ -197,9 +204,13 @@ app.delete("/api/cohorts/:cohortId", (req, res) => {
       res.status(204).send();
     })
     .catch((error) => {
+      console.log(error)
       res.status(500).json({ message: "Error deleting Cohort" });
     });
 });
+
+app.use(notFoundHandler);
+app.use(errorHandler);
 
 // START SERVER
 app.listen(PORT, () => {
